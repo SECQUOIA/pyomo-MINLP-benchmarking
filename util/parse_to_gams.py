@@ -95,6 +95,7 @@ def termination_condition_to_gams_format(tc, problem):
         return 3
     if tc is TerminationCondition.licensingProblems:
         return 11
+    return 'NA'
 
 
 def solver_status_to_gams(ss, tc, problem):

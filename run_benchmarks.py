@@ -57,6 +57,8 @@ def parse_command_line_arguments():
                         required=False, metavar='differentiate_mode', choices=["reverse_symbolic", "sympy"])
     parser.add_argument('--mip-solver', dest='mip_solver', type=str, default='cplex',
                         required=False, metavar='mip_solver')
+    parser.add_argument('--mip-projection-solver', dest='mip_projection_solver', type=str, default=None,
+                        required=False, metavar='mip_projection_solver')
     parser.add_argument('--linearize-inactive', dest='linearize_inactive', default=False,
                         action='store_const', const=True,
                         help='Add OA cuts for all constriants no matter active or inactive')
@@ -85,6 +87,15 @@ def parse_command_line_arguments():
                         required=False, metavar='result_floder')
     parser.add_argument('--add-regularization', dest='add_regularization', type=str, default=None,
                         required=False, metavar='add_regularization')
+    parser.add_argument('--add-no-good-cuts', dest='add_no_good_cuts', default=False,
+                        action='store_const', const=True,
+                        help='Add integer cuts (no-good cuts) to binary variables to disallow same integer solution again.')
+    parser.add_argument('--not-add-cuts-at-incumbent', dest='add_cuts_at_incumbent', default=True,
+                        action='store_const', const=False,
+                        help='Add integer cuts (no-good cuts) to binary variables to disallow same integer solution again.')
+    parser.add_argument('--new-folder-when-skip', dest='new_folder_when_skip', default=False,
+                        action='store_const', const=True,
+                        help='whether create new folder when skip folder is provided')
     return parser.parse_args()
 
 
@@ -153,7 +164,9 @@ def construct_trace_data(opt, results):
             '. Regularization master time: ' + str(solver['Timing']['regularization master']) + \
             '. fp master time: ' + str(solver['Timing']['fp master']) + \
             '. fp master time: ' + str(solver['Timing']['fp subproblem']) + \
-            '. PyomoNLP time: ' + str(solver['Timing']['PyomoNLP'])
+            '. PyomoNLP time: ' + str(solver['Timing']['PyomoNLP']) + \
+            '. Number of infeasible nlp subproblems: ' + \
+                str(solver['Num infeasible nlp subproblem'])
         ]
         return trace_data
 
@@ -175,6 +188,7 @@ def benchmark_model(timelimit):
                 results = opt.solve(model, tee=True, time_limit=timelimit,
                                     mip_solver=args.mip_solver,
                                     nlp_solver=args.nlp_solver,
+                                    mip_projection_solver=args.mip_projection_solver,
                                     strategy=args.solver_strategy,
                                     feasibility_norm=args.feasibility_norm,
                                     differentiate_mode=args.differentiate_mode,
@@ -191,7 +205,9 @@ def benchmark_model(timelimit):
                                     ecp_tolerance=args.ecp_tolerance,
                                     init_strategy=args.init_strategy,
                                     add_slack=args.add_slack,
-                                    add_regularization=args.add_regularization)
+                                    add_regularization=args.add_regularization,
+                                    add_no_good_cuts=args.add_no_good_cuts,
+                                    add_cuts_at_incumbent=args.add_cuts_at_incumbent)
         with open(result_file, 'a') as result_file_obj, redirect_stdout(result_file_obj):
             print('\n-------Result-------')
             print(results)
@@ -249,9 +265,13 @@ if __name__ == '__main__':
     # Set various filenames
     model_files = [model_file for model_file in sorted(
         os.listdir(args.model_dir)) if model_file.endswith('.py')]
-    solver_dir = ((args.result_floder + '/') if args.result_floder != '' else '') + args.solver_name + \
-        (f"-{args.solver_strategy}" if args.solver_strategy else "") + \
-        ("-singletree-" if args.single_tree else "-") + current_time
+    if args.skip_floder != '' and args.new_folder_when_skip is False:
+        solver_dir = args.skip_floder
+
+    else:
+        solver_dir = ((args.result_floder + '/') if args.result_floder != '' else '') + args.solver_name + \
+            (f"-{args.solver_strategy}" if args.solver_strategy else "") + \
+            ("-singletree-" if args.single_tree else "-") + current_time
     error_file = f"./results/{solver_dir}/failed_models.txt"
     solving_times_file = f"./results/{solver_dir}/solving_times.csv"
     if not os.path.exists('./results/'+solver_dir):
