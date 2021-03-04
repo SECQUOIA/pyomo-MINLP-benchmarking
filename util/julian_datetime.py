@@ -17,7 +17,8 @@ def get_julian_datetime(date):
 
     # Ensure correct format
     if not isinstance(date, datetime.datetime):
-        raise TypeError('Invalid type for parameter "date" - expecting datetime')
+        raise TypeError(
+            'Invalid type for parameter "date" - expecting datetime')
     elif date.year < 1801 or date.year > 2099:
         raise ValueError('Datetime must be between year 1801 and 2099')
 

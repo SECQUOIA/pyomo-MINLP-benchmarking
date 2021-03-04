@@ -12,6 +12,7 @@ from pyomo.opt import SolverStatus
 from pyomo.opt import TerminationCondition as tc
 from util.parse_to_gams import (termination_condition_to_gams_format,
                                 solver_status_to_gams, obj_to_gams_format, objest_to_gams_format)
+from util.gams_optionfile import gams_optionfile
 from datetime import datetime
 import sys
 import json
@@ -29,7 +30,11 @@ def parse_command_line_arguments():
                         help="Skip file if file in 'failed_models.txt'")
     parser.add_argument('--solver', dest='solver_name', type=str, required=True,
                         metavar='solver_name',
-                        choices=['baron', 'mindtpy', 'feas-pump'])
+                        choices=['baron', 'mindtpy', 'feas-pump', 'gams'])
+    parser.add_argument('--gams-solver', dest='gams_solver_name', type=str, required=False,
+                        metavar='gams_solver_name')
+    parser.add_argument('--gams-solver-optionfile', dest='gams_solver_optionfile', type=str, required=False,
+                        metavar='gams_solver_optionfile')
     parser.add_argument('--strategy', dest='solver_strategy', type=str,
                         required=False, metavar='solver_strategy', default="OA",
                         help='Solver strategy (if applicable)')
@@ -96,6 +101,9 @@ def parse_command_line_arguments():
     parser.add_argument('--new-folder-when-skip', dest='new_folder_when_skip', default=False,
                         action='store_const', const=True,
                         help='whether create new folder when skip folder is provided')
+    parser.add_argument('--level-coef', dest='level_coef', type=float,
+                        required=False, metavar='level_coef', default=0.5,
+                        help='Feasibility tolerance used to determine the stopping criterion in the ECP method.')
     return parser.parse_args()
 
 
@@ -118,7 +126,7 @@ def load_model(model_name):
 def construct_trace_data(opt, results):
     problem = results['Problem'][0]
     solver = results['Solver'][0]
-    if args.solver_name in ['mindtpy', 'gdpopt']:
+    if args.solver_name in ['mindtpy', 'gdpopt', 'gams']:
         trace_data = [
             model_name,  # GAMS model filename
             'MINLP',     # LP, MIP, NLP, etc.
@@ -175,15 +183,25 @@ def benchmark_model(timelimit):
     opt = SolverFactory(args.solver_name)
     try:
         with open(result_file, 'w') as result_file_obj, redirect_stdout(result_file_obj):
-            opt.CONFIG.logger.propagate = False
-            opt.CONFIG.logger.addHandler(logging.FileHandler(
-                sys.stdout.name, mode=sys.stdout.mode))
-            opt.CONFIG.logger.info('--------Yes--------')
+            if args.solver_name == 'mindtpy':
+                opt.CONFIG.logger.propagate = False
+                opt.CONFIG.logger.addHandler(logging.FileHandler(
+                    sys.stdout.name, mode=sys.stdout.mode))
+                opt.CONFIG.logger.info('--------Yes--------')
             model = model_scope.m
+            if args.gams_solver_optionfile is not None:
+                print('Use optionfile')
+                print(args.gams_solver_name +
+                        '-'+args.gams_solver_optionfile)
 
             if args.solver_name == 'baron':  # baron
                 results = opt.solve(
                     model, tee=True, time_limit=timelimit, threads=args.threads)
+            elif args.solver_name == 'gams':  # baron
+                results = opt.solve(
+                    model, solver=args.gams_solver_name, tee=True, tracefile=trace_file,
+                    # io_options={'output_filename': model.name},
+                    add_options=gams_optionfile[args.gams_solver_name if args.gams_solver_optionfile is None else args.gams_solver_name+'-'+args.gams_solver_optionfile])
             else:  # MindtPy
                 results = opt.solve(model, tee=True, time_limit=timelimit,
                                     mip_solver=args.mip_solver,
@@ -207,7 +225,8 @@ def benchmark_model(timelimit):
                                     add_slack=args.add_slack,
                                     add_regularization=args.add_regularization,
                                     add_no_good_cuts=args.add_no_good_cuts,
-                                    add_cuts_at_incumbent=args.add_cuts_at_incumbent)
+                                    add_cuts_at_incumbent=args.add_cuts_at_incumbent,
+                                    level_coef=args.level_coef)
         with open(result_file, 'a') as result_file_obj, redirect_stdout(result_file_obj):
             print('\n-------Result-------')
             print(results)
@@ -235,17 +254,20 @@ def benchmark_model(timelimit):
             solving_times.append([model_name, 'maxTimeLimit'])
         elif results.Solver[0].Termination_condition == tc.maxIterations:
             solving_times.append([model_name, 'maxIterations'])
-        trace_data = construct_trace_data(opt, results)
-        with open(trace_file, 'w') as trace_file_obj:
-            trace_file_obj.write(', '.join(str(el)
-                                           for el in trace_data) + '\n')
+        if args.solver_name == 'mindtpy':
+            trace_data = construct_trace_data(opt, results)
+            if args.solver_name == 'mindtpy':
+                with open(trace_file, 'w') as trace_file_obj:
+                    trace_file_obj.write(', '.join(str(el)
+                                                    for el in trace_data) + '\n')
 
     except Exception as e:
         error_file_obj.write(model_file+'\n')
         print(f"Failed to solve '{model_file}'", file=sys.stderr)
         print(e, file=sys.stderr)
         print(f"File written to '{error_file}'", file=sys.stderr)
-    del opt.CONFIG.logger.handlers[0]
+    if args.solver_name == 'mindtpy':
+        del opt.CONFIG.logger.handlers[0]
 
 
 if __name__ == '__main__':
@@ -269,8 +291,10 @@ if __name__ == '__main__':
         solver_dir = args.skip_floder
 
     else:
-        solver_dir = ((args.result_floder + '/') if args.result_floder != '' else '') + args.solver_name + \
-            (f"-{args.solver_strategy}" if args.solver_strategy else "") + \
+        solver_dir = ((args.result_floder + '/') if args.result_floder != '' else '') + \
+            args.solver_name + (f"-{args.gams_solver_name}" if args.gams_solver_name else "") +\
+            (f"-{args.gams_solver_optionfile}" if args.gams_solver_optionfile else "") + \
+            (f"-{args.solver_strategy}" if args.solver_strategy and args.solver_name == 'mindtpy' else "") + \
             ("-singletree-" if args.single_tree else "-") + current_time
     error_file = f"./results/{solver_dir}/failed_models.txt"
     solving_times_file = f"./results/{solver_dir}/solving_times.csv"
@@ -301,7 +325,11 @@ if __name__ == '__main__':
     for model_file in model_files:
         model_name, _ = os.path.splitext(model_file)  # removes ending
         result_file = './results/'+solver_dir+'/'+model_name+'.txt'
-        trace_file = './results/'+solver_dir+'/'+model_name+'.trc'
+        if args.solver_name == 'mindtpy':
+            trace_file = './results/'+solver_dir+'/'+model_name+'.trc'
+        elif args.solver_name == 'gams':
+            trace_file = os.path.dirname(os.path.abspath(
+                __file__)) + '/results/'+solver_dir+'/'+model_name+'.trc'
         sys.stdout = sys.__stdout__
         if args.skip_existing and os.path.exists('./results/'+args.skip_floder+'/'+model_name+'.trc'):
             print(f"Skipping '{trace_file}'")
