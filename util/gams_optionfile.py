@@ -6,7 +6,7 @@ general_option = ('option MIP = CPLEX;'
                   'GAMS_MODEL.nodLim = 1E8;'
                   'option domLim = 1E8;'
                   'option iterLim = 1E8;'
-                  'option resLim = 10;')
+                  'option resLim = 900;')
 
 gams_optionfile = {
     'bonminh-B-BB': [
@@ -16,7 +16,7 @@ gams_optionfile = {
         '$onecho > bonminh.opt \n'
         'bonmin.algorithm B-BB \n'
         'milp_solver CPLEX\n'
-        'bonmin.time_limit 10\n'
+        'bonmin.time_limit 900\n'
         '$offecho'
     ],
     'bonminh-B-HYB': [
@@ -26,7 +26,7 @@ gams_optionfile = {
         '$onecho > bonminh.op2 \n'
         'bonmin.algorithm B-HYB \n'
         'milp_solver CPLEX\n'
-        'bonmin.time_limit 10\n'
+        'bonmin.time_limit 900\n'
         '$offecho'
     ],
     'bonminh-B-OA': [
@@ -36,7 +36,7 @@ gams_optionfile = {
         '$onecho > bonminh.op3 \n'
         'bonmin.algorithm B-OA \n'
         'milp_solver CPLEX\n'
-        'bonmin.time_limit 10\n'
+        'bonmin.time_limit 900\n'
         '$offecho'
     ],
     'AlphaECP': [
@@ -68,12 +68,13 @@ gams_optionfile = {
         '$offecho'
     ],
     'scip': [
-        general_option +
-        'GAMS_MODEL.optfile = 1;'
-        '\n'
-        '$onecho > scip.opt \n'
-        'constraints/nonlinear/assumeconvex True\n'
-        '$offecho'
+        general_option
+        #  +
+        # 'GAMS_MODEL.optfile = 1;'
+        # '\n'
+        # '$onecho > scip.opt \n'
+        # 'constraints/nonlinear/assumeconvex True\n'
+        # '$offecho'
     ],
     'SHOT-multi-tree': [
         general_option +
@@ -107,5 +108,43 @@ gams_optionfile = {
     ],
     'baron': [
         general_option
+    ],
+    'antigone': [
+        general_option
+    ],
+    'Couenne': [
+        general_option +
+        'GAMS_MODEL.optfile = 1;'
+        '\n'
+        '$onecho > Couenne.opt \n'
+        'lp_solver Clp\n'
+        '$offecho'
+    ],
+    'KNITRO': [
+        general_option +
+        'GAMS_MODEL.optfile = 1;'
+        '\n'
+        '$onecho > KNITRO.opt \n'
+        'mip_method 2\n'
+        '$offecho'
+    ],
+    'LINDO': [
+        general_option +
+        'GAMS_MODEL.optfile = 1;'
+        '\n'
+        '$onecho > LINDO.opt \n'
+        'USEGOP 0\n'
+        'SPLEX_ITRLMT -1\n'
+        'MIP_ITRLIM -1\n'
+        '$offecho'
+    ],
+    'lindoglobal': [
+        general_option +
+        'GAMS_MODEL.optfile = 1;'
+        '\n'
+        '$onecho > LINDO.opt \n'
+        'SPLEX_ITRLMT -1\n'
+        'MIP_ITRLIM -1\n'
+        '$offecho'
     ]
 }

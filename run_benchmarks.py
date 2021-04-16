@@ -30,7 +30,7 @@ def parse_command_line_arguments():
                         help="Skip file if file in 'failed_models.txt'")
     parser.add_argument('--solver', dest='solver_name', type=str, required=True,
                         metavar='solver_name',
-                        choices=['baron', 'mindtpy', 'feas-pump', 'gams'])
+                        choices=['baron', 'mindtpy', 'feas-pump', 'gams', 'couenne'])
     parser.add_argument('--gams-solver', dest='gams_solver_name', type=str, required=False,
                         metavar='gams_solver_name')
     parser.add_argument('--gams-solver-optionfile', dest='gams_solver_optionfile', type=str, required=False,
@@ -62,8 +62,8 @@ def parse_command_line_arguments():
                         required=False, metavar='differentiate_mode', choices=["reverse_symbolic", "sympy"])
     parser.add_argument('--mip-solver', dest='mip_solver', type=str, default='cplex',
                         required=False, metavar='mip_solver')
-    parser.add_argument('--mip-projection-solver', dest='mip_projection_solver', type=str, default=None,
-                        required=False, metavar='mip_projection_solver')
+    parser.add_argument('--mip-regularization-solver', dest='mip_regularization_solver', type=str, default=None,
+                        required=False, metavar='mip_regularization_solver')
     parser.add_argument('--linearize-inactive', dest='linearize_inactive', default=False,
                         action='store_const', const=True,
                         help='Add OA cuts for all constriants no matter active or inactive')
@@ -88,6 +88,9 @@ def parse_command_line_arguments():
     parser.add_argument('--add-slack', dest='add_slack', default=False,
                         action='store_const', const=True,
                         help='activate add_slack option')
+    parser.add_argument('--equality-relaxation', dest='equality_relaxation', default=False,
+                        action='store_const', const=True,
+                        help='activate equality_relaxation option')
     parser.add_argument('--result-folder', dest='result_floder', type=str, default='',
                         required=False, metavar='result_floder')
     parser.add_argument('--add-regularization', dest='add_regularization', type=str, default=None,
@@ -104,6 +107,11 @@ def parse_command_line_arguments():
     parser.add_argument('--level-coef', dest='level_coef', type=float,
                         required=False, metavar='level_coef', default=0.5,
                         help='Feasibility tolerance used to determine the stopping criterion in the ECP method.')
+    parser.add_argument('--sqp-lag-scaling-coef', dest='sqp_lag_scaling_coef', type=str, default=None,
+                        required=False, metavar='sqp_lag_scaling_coef', choices=['fixed', 'variable_dependent'])
+    parser.add_argument('--use-tabu-list', dest='use_tabu_list', default=False,
+                        action='store_const', const=True,
+                        help='whether use tabu list')
     return parser.parse_args()
 
 
@@ -126,7 +134,7 @@ def load_model(model_name):
 def construct_trace_data(opt, results):
     problem = results['Problem'][0]
     solver = results['Solver'][0]
-    if args.solver_name in ['mindtpy', 'gdpopt', 'gams']:
+    if args.solver_name in ['mindtpy', 'gdpopt', 'gams', 'couenne']:
         trace_data = [
             model_name,  # GAMS model filename
             'MINLP',     # LP, MIP, NLP, etc.
@@ -180,7 +188,10 @@ def construct_trace_data(opt, results):
 
 
 def benchmark_model(timelimit):
-    opt = SolverFactory(args.solver_name)
+    if args.solver_name == 'couenne':
+        opt = SolverFactory(args.solver_name, executable='~/couenne')
+    else:
+        opt = SolverFactory(args.solver_name)
     try:
         with open(result_file, 'w') as result_file_obj, redirect_stdout(result_file_obj):
             if args.solver_name == 'mindtpy':
@@ -192,12 +203,15 @@ def benchmark_model(timelimit):
             if args.gams_solver_optionfile is not None:
                 print('Use optionfile')
                 print(args.gams_solver_name +
-                        '-'+args.gams_solver_optionfile)
+                      '-'+args.gams_solver_optionfile)
 
             if args.solver_name == 'baron':  # baron
                 results = opt.solve(
                     model, tee=True, time_limit=timelimit, threads=args.threads)
-            elif args.solver_name == 'gams':  # baron
+            if args.solver_name == 'couenne':
+                results = opt.solve(
+                    model, tee=True, timelimit=timelimit)
+            elif args.solver_name == 'gams':
                 results = opt.solve(
                     model, solver=args.gams_solver_name, tee=True, tracefile=trace_file,
                     # io_options={'output_filename': model.name},
@@ -206,7 +220,7 @@ def benchmark_model(timelimit):
                 results = opt.solve(model, tee=True, time_limit=timelimit,
                                     mip_solver=args.mip_solver,
                                     nlp_solver=args.nlp_solver,
-                                    mip_projection_solver=args.mip_projection_solver,
+                                    mip_regularization_solver=args.mip_regularization_solver,
                                     strategy=args.solver_strategy,
                                     feasibility_norm=args.feasibility_norm,
                                     differentiate_mode=args.differentiate_mode,
@@ -223,10 +237,14 @@ def benchmark_model(timelimit):
                                     ecp_tolerance=args.ecp_tolerance,
                                     init_strategy=args.init_strategy,
                                     add_slack=args.add_slack,
+                                    equality_relaxation=args.equality_relaxation,
                                     add_regularization=args.add_regularization,
                                     add_no_good_cuts=args.add_no_good_cuts,
                                     add_cuts_at_incumbent=args.add_cuts_at_incumbent,
-                                    level_coef=args.level_coef)
+                                    level_coef=args.level_coef,
+                                    sqp_lag_scaling_coef=args.sqp_lag_scaling_coef,
+                                    use_tabu_list=args.use_tabu_list
+                                    )
         with open(result_file, 'a') as result_file_obj, redirect_stdout(result_file_obj):
             print('\n-------Result-------')
             print(results)
@@ -259,7 +277,7 @@ def benchmark_model(timelimit):
             if args.solver_name == 'mindtpy':
                 with open(trace_file, 'w') as trace_file_obj:
                     trace_file_obj.write(', '.join(str(el)
-                                                    for el in trace_data) + '\n')
+                                                   for el in trace_data) + '\n')
 
     except Exception as e:
         error_file_obj.write(model_file+'\n')

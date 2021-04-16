@@ -15,6 +15,9 @@ python run_benchmarks.py -h  # show some help
 python run_benchmarks.py --solver mindtpy --model-dir models
 # or, when re-running
 python run_benchmarks.py --solver mindtpy --model-dir models --redo-existing --no-skip-failed
+
+python run_benchmarks.py --solver mindtpy --model-dir models_test --timelimit 900 --mip-solver cplex_persistent --nlp-solver gams --nlp-solver-args '{"solver":"ipopth"}' --iteration-limit 2000 --strategy OA --method-name OA_1thread --threads 1 --stalling-limit 2000 --result-folder OA 
+
 ```
 After running, the `results/<solver>` dir will contain
 - a `.txt` file for each model output
