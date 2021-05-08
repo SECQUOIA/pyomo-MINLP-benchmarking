@@ -10,7 +10,7 @@ general_option = ('option MIP = CPLEX;'
 
 gams_optionfile = {
     'bonminh-B-BB': [
-        general_option+
+        general_option +
         'GAMS_MODEL.optfile = 1;'
         '\n'
         '$onecho > bonminh.opt \n'
