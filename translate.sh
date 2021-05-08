@@ -10,7 +10,8 @@ fi
 
 # TESTSET is the txt file of instance names 
 
-TESTSET="new-MINLPlib-convex-instances"
+TESTSET="convex"
+PYOMOMODELDIR="models_all_solvable3"
 SKIPEXISTING=0   # whether to skip runs for which a trace file already exists
 
 GAMSOPTS="reslim=100 threads=1"
@@ -49,13 +50,13 @@ EOF
       $GAMS ${INSTANCEDIR}/$1 MINLP=$2 MIQCP=$2 OPTFILE=$3 $GAMSOPTS LF=${TESTSET}.log/$1.$2.$3.log O=${TESTSET}.log/$1.$2.$3.lst TRACE=$TRACEFILE
 
       # change name of gams.py into actual instance name .py
-      # you can define the directory to store the auto-generated pyomo files by changing models_convex_new2
+      # you can define the directory to store the auto-generated pyomo files by changing PYOMOMODELDIR
 
       # when your gams version is below 34.3, the name of generated pyomo file is gams.py
-      # mv gams.py models_convex_new2/$1.py
+      # mv gams.py ${PYOMOMODELDIR}/$1.py
 
       # when your gams version is 34.3 or above, the name of generated pyomo file is pyomo.py
-      mv pyomo.py models_convex_new2/$1.py
+      mv pyomo.py ${PYOMOMODELDIR}/$1.py
 
    # else
 
