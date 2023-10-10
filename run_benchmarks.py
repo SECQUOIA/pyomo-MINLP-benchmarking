@@ -10,6 +10,7 @@ from importlib import import_module
 from pyomo.environ import SolverFactory
 from pyomo.opt import SolverStatus
 from pyomo.opt import TerminationCondition as tc
+from pyomo.common.tee import capture_output
 from util.parse_to_gams import (termination_condition_to_gams_format,
                                 solver_status_to_gams, obj_to_gams_format, objest_to_gams_format)
 from util.gams_optionfile import gams_optionfile
@@ -39,7 +40,7 @@ def parse_command_line_arguments():
                         required=False, metavar='solver_strategy', default="OA",
                         help='Solver strategy (if applicable)')
     parser.add_argument('--init-strategy', dest='init_strategy', type=str,
-                        required=False, metavar='init_strategy',
+                        required=False, metavar='init_strategy', default='rNLP',
                         help='Initialization strategy (if applicable)')
     parser.add_argument('--timelimit', dest='timelimit', type=int,
                         required=False, metavar='timelimit', default=60,
@@ -98,7 +99,7 @@ def parse_command_line_arguments():
     parser.add_argument('--add-no-good-cuts', dest='add_no_good_cuts', default=False,
                         action='store_const', const=True,
                         help='Add integer cuts (no-good cuts) to binary variables to disallow same integer solution again.')
-    parser.add_argument('--not-add-cuts-at-incumbent', dest='add_cuts_at_incumbent', default=True,
+    parser.add_argument('--not-add-cuts-at-incumbent', dest='add_cuts_at_incumbent', default=False,
                         action='store_const', const=False,
                         help='Add integer cuts (no-good cuts) to binary variables to disallow same integer solution again.')
     parser.add_argument('--new-folder-when-skip', dest='new_folder_when_skip', default=False,
@@ -139,7 +140,9 @@ def construct_trace_data(opt, results):
             model_name,  # GAMS model filename
             'MINLP',     # LP, MIP, NLP, etc.
             solver['Name'] + ("_singletree_" if args.single_tree ==
-                              True else "_")+args.method_name,
+                              True else "_") + 
+                              ((args.add_regularization + "_") if args.add_regularization is not None else "") + 
+                              args.method_name,
             args.nlp_solver,  # default NLP solver
             args.mip_solver,  # default MIP solver
             get_julian_datetime(datetime.now()),  # start day/time of job
@@ -193,17 +196,18 @@ def benchmark_model(timelimit):
     else:
         opt = SolverFactory(args.solver_name)
     try:
-        with open(result_file, 'w') as result_file_obj, redirect_stdout(result_file_obj):
+        with open(result_file, 'w') as result_file_obj, capture_output(result_file_obj): #redirect_stdout(result_file_obj), 
             if args.solver_name == 'mindtpy':
                 opt.CONFIG.logger.propagate = False
-                opt.CONFIG.logger.addHandler(logging.FileHandler(
-                    sys.stdout.name, mode=sys.stdout.mode))
+                # print(sys.stdout.name)
+                # opt.CONFIG.logger.addHandler(logging.FileHandler(
+                #     sys.stdout.name, mode=sys.stdout.mode))
                 opt.CONFIG.logger.info('--------Yes--------')
             model = model_scope.m
             if args.gams_solver_optionfile is not None:
                 print('Use optionfile')
                 print(args.gams_solver_name +
-                      '-'+args.gams_solver_optionfile)
+                        '-'+args.gams_solver_optionfile)
 
             if args.solver_name == 'baron':  # baron
                 results = opt.solve(
@@ -212,15 +216,21 @@ def benchmark_model(timelimit):
                 results = opt.solve(
                     model, tee=True, timelimit=timelimit)
             elif args.solver_name == 'gams':
+                # opt.options['trace'] = trace_file
                 results = opt.solve(
                     model, solver=args.gams_solver_name, tee=True, tracefile=trace_file,
-                    # io_options={'output_filename': model.name},
                     add_options=gams_optionfile[args.gams_solver_name if args.gams_solver_optionfile is None else args.gams_solver_name+'-'+args.gams_solver_optionfile])
             else:  # MindtPy
+                mindtpy_args = {}
+                if args.solver_strategy == 'ECP':
+                    mindtpy_args['ecp_tolerance'] = args.ecp_tolerance
+                if args.solver_strategy == 'OA' and args.add_regularization is not None:
+                    mindtpy_args['level_coef'] = args.level_coef
+                    mindtpy_args['sqp_lag_scaling_coef'] = args.sqp_lag_scaling_coef
+                    mindtpy_args['mip_regularization_solver'] = args.mip_regularization_solver
                 results = opt.solve(model, tee=True, time_limit=timelimit,
                                     mip_solver=args.mip_solver,
                                     nlp_solver=args.nlp_solver,
-                                    mip_regularization_solver=args.mip_regularization_solver,
                                     strategy=args.solver_strategy,
                                     feasibility_norm=args.feasibility_norm,
                                     differentiate_mode=args.differentiate_mode,
@@ -234,36 +244,17 @@ def benchmark_model(timelimit):
                                         args.nlp_solver_args) if args.nlp_solver_args != '' else {},
                                     threads=args.threads,
                                     stalling_limit=args.stalling_limit,
-                                    ecp_tolerance=args.ecp_tolerance,
                                     init_strategy=args.init_strategy,
                                     add_slack=args.add_slack,
                                     equality_relaxation=args.equality_relaxation,
                                     add_regularization=args.add_regularization,
                                     add_no_good_cuts=args.add_no_good_cuts,
                                     add_cuts_at_incumbent=args.add_cuts_at_incumbent,
-                                    level_coef=args.level_coef,
-                                    sqp_lag_scaling_coef=args.sqp_lag_scaling_coef,
-                                    use_tabu_list=args.use_tabu_list
+                                    use_tabu_list=args.use_tabu_list,
+                                    # mip_solver_tee=True,
+                                    # nlp_solver_tee=True,
+                                    **mindtpy_args
                                     )
-        with open(result_file, 'a') as result_file_obj, redirect_stdout(result_file_obj):
-            print('\n-------Result-------')
-            print(results)
-            print('args.mip_solver: ', args.mip_solver)
-            print('args.init_strategy: ', args.init_strategy)
-            print('args.nlp_solver: ', args.nlp_solver)
-            print('args.solver_strategy: ', args.solver_strategy)
-            print('args.feasibility_norm: ', args.feasibility_norm)
-            print('args.differentiate_mode: ', args.differentiate_mode)
-            print('args.linearize_inactive: ', args.linearize_inactive)
-            print('args.single_tree: ', args.single_tree)
-            print('args.iteration_limit: ', args.iteration_limit)
-            print('args.solver_tee: ', args.solver_tee)
-            print('args.mip_solver_args: ', args.mip_solver_args)
-            print('args.nlp_solver_args: ', args.nlp_solver_args)
-            print('args.threads: ', args.threads)
-            print('args.stalling_limit: ', args.stalling_limit)
-            print('args.ecp_tolerance: ', args.ecp_tolerance)
-            print('args.add_slack: ', args.add_slack)
 
         solving_time = results.Solver[0].Wallclock_time
         if results.Solver[0].Termination_condition == tc.optimal:
@@ -277,15 +268,15 @@ def benchmark_model(timelimit):
             if args.solver_name == 'mindtpy':
                 with open(trace_file, 'w') as trace_file_obj:
                     trace_file_obj.write(', '.join(str(el)
-                                                   for el in trace_data) + '\n')
+                                                    for el in trace_data) + '\n')
 
     except Exception as e:
         error_file_obj.write(model_file+'\n')
         print(f"Failed to solve '{model_file}'", file=sys.stderr)
         print(e, file=sys.stderr)
         print(f"File written to '{error_file}'", file=sys.stderr)
-    if args.solver_name == 'mindtpy':
-        del opt.CONFIG.logger.handlers[0]
+    # if args.solver_name == 'mindtpy':
+    #     del opt.CONFIG.logger.handlers[0]
 
 
 if __name__ == '__main__':
@@ -300,7 +291,7 @@ if __name__ == '__main__':
     if args.result_floder != '':
         if not os.path.exists('results/'+args.result_floder):
             print("Creating " + args.result_floder + " under results folder")
-            os.makedirs('results'+args.result_floder)
+            os.makedirs('results/'+args.result_floder)
 
     # Set various filenames
     model_files = [model_file for model_file in sorted(
@@ -333,8 +324,7 @@ if __name__ == '__main__':
     solving_times = [['Instance name', 'Average solving time']]
 
     print('################################')
-    print(f"Benchmarking solver '{args.solver_name}' " +
-          ("with strategy '{args.solver_strategy}'" if args.solver_strategy else ""))
+    print("Benchmarking solver %s  with strategy %s".format(args.solver_name, args.solver_strategy if args.solver_strategy else ""))
     print(f"Writing to './results/{solver_dir}'")
     print(f"Failed model files will be written to '{error_file}'")
     print(f"Solving times will be written to '{solving_times_file}'")
