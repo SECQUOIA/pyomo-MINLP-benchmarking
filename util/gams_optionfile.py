@@ -76,7 +76,7 @@ gams_optionfile = {
         # 'constraints/nonlinear/assumeconvex True\n'
         # '$offecho'
     ],
-    'SHOT-multi-tree': [
+    'SHOT-cplex-multi-tree': [
         general_option +
         'GAMS_MODEL.optfile = 1;'
         '\n'
@@ -88,10 +88,10 @@ gams_optionfile = {
         'Termination.ObjectiveGap.Absolute = 0\n'
         'Termination.ObjectiveGap.Relative = 0.001\n'
         'Termination.TimeLimit = 900\n'
-        'Dual.TreeStrategy = 1\n'
+        'Dual.TreeStrategy = 0\n'
         '$offecho'
     ],
-    'SHOT-single-tree': [
+    'SHOT-cplex-single-tree': [
         general_option +
         'GAMS_MODEL.optfile = 2;'
         '\n'
@@ -103,7 +103,37 @@ gams_optionfile = {
         'Termination.ObjectiveGap.Absolute = 0\n'
         'Termination.ObjectiveGap.Relative = 0.001\n'
         'Termination.TimeLimit = 900\n'
+        'Dual.TreeStrategy = 1\n'
+        '$offecho'
+    ],
+    'SHOT-gurobi-multi-tree': [
+        general_option +
+        'GAMS_MODEL.optfile = 3;'
+        '\n'
+        '$onecho > shot.op3 \n'
+        'Dual.MIP.NumberOfThreads = 1\n'
+        'Dual.MIP.Solver = 1\n'
+        'Primal.FixedInteger.Solver = 2\n'
+        'Subsolver.GAMS.NLP.Solver = ipopth\n'
+        'Termination.ObjectiveGap.Absolute = 0\n'
+        'Termination.ObjectiveGap.Relative = 0.001\n'
+        'Termination.TimeLimit = 900\n'
         'Dual.TreeStrategy = 0\n'
+        '$offecho'
+    ],
+    'SHOT-gurobi-single-tree': [
+        general_option +
+        'GAMS_MODEL.optfile = 4;'
+        '\n'
+        '$onecho > shot.op4 \n'
+        'Dual.MIP.NumberOfThreads = 1\n'
+        'Dual.MIP.Solver = 1\n'
+        'Primal.FixedInteger.Solver = 2\n'
+        'Subsolver.GAMS.NLP.Solver = ipopth\n'
+        'Termination.ObjectiveGap.Absolute = 0\n'
+        'Termination.ObjectiveGap.Relative = 0.001\n'
+        'Termination.TimeLimit = 900\n'
+        'Dual.TreeStrategy = 1\n'
         '$offecho'
     ],
     'baron': [
