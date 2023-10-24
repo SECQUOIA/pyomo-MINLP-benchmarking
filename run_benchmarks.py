@@ -113,6 +113,9 @@ def parse_command_line_arguments():
     parser.add_argument('--use-tabu-list', dest='use_tabu_list', default=False,
                         action='store_const', const=True,
                         help='whether use tabu list')
+    parser.add_argument('--use-baron-convexification', dest='use_baron_convexification', default=False,
+                        action='store_const', const=True,
+                        help='whether use baron convexification')
     return parser.parse_args()
 
 
@@ -251,6 +254,7 @@ def benchmark_model(timelimit):
                                     add_no_good_cuts=args.add_no_good_cuts,
                                     add_cuts_at_incumbent=args.add_cuts_at_incumbent,
                                     use_tabu_list=args.use_tabu_list,
+                                    use_baron_convexification=args.use_baron_convexification,
                                     # mip_solver_tee=True,
                                     # nlp_solver_tee=True,
                                     **mindtpy_args
@@ -275,8 +279,12 @@ def benchmark_model(timelimit):
         print(f"Failed to solve '{model_file}'", file=sys.stderr)
         print(e, file=sys.stderr)
         print(f"File written to '{error_file}'", file=sys.stderr)
-    # if args.solver_name == 'mindtpy':
-    #     del opt.CONFIG.logger.handlers[0]
+    if args.solver_name == 'mindtpy':
+        del opt.CONFIG.logger.handlers[0]
+    if args.use_baron_convexification:
+        os.remove('./root_relaxation_baron.bar')
+        os.remove('./relax.lp')
+        os.remove('./coinlp0.lp')
 
 
 if __name__ == '__main__':
