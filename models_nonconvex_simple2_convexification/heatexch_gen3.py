@@ -1109,105 +1109,105 @@ m.c219 = Constraint(expr=-(m.x294*m.x394 + m.x304*m.x404 + m.x314*m.x414 + m.x32
 m.c220 = Constraint(expr=-(m.x295*m.x395 + m.x305*m.x405 + m.x315*m.x415 + m.x325*m.x425 + m.x335*m.x435) + 13.9*m.x89
                           == 0)
 
-m.c221 = Constraint(expr=-(m.x151 - m.x152)/log(m.x151/(1e-6 + m.x152)) + m.x436 == 0)
+m.c221 = Constraint(expr=-(m.x151 - m.x152)/log(m.x151/(1e-10 + m.x152)) + m.x436 == 0)
 
-m.c222 = Constraint(expr=-(m.x152 - m.x153)/log(m.x152/(1e-6 + m.x153)) + m.x437 == 0)
+m.c222 = Constraint(expr=-(m.x152 - m.x153)/log(m.x152/(1e-10 + m.x153)) + m.x437 == 0)
 
-m.c223 = Constraint(expr=-(m.x154 - m.x155)/log(m.x154/(1e-6 + m.x155)) + m.x438 == 0)
+m.c223 = Constraint(expr=-(m.x154 - m.x155)/log(m.x154/(1e-10 + m.x155)) + m.x438 == 0)
 
-m.c224 = Constraint(expr=-(m.x155 - m.x156)/log(m.x155/(1e-6 + m.x156)) + m.x439 == 0)
+m.c224 = Constraint(expr=-(m.x155 - m.x156)/log(m.x155/(1e-10 + m.x156)) + m.x439 == 0)
 
-m.c225 = Constraint(expr=-(m.x157 - m.x158)/log(m.x157/(1e-6 + m.x158)) + m.x440 == 0)
+m.c225 = Constraint(expr=-(m.x157 - m.x158)/log(m.x157/(1e-10 + m.x158)) + m.x440 == 0)
 
-m.c226 = Constraint(expr=-(m.x158 - m.x159)/log(m.x158/(1e-6 + m.x159)) + m.x441 == 0)
+m.c226 = Constraint(expr=-(m.x158 - m.x159)/log(m.x158/(1e-10 + m.x159)) + m.x441 == 0)
 
-m.c227 = Constraint(expr=-(m.x160 - m.x161)/log(m.x160/(1e-6 + m.x161)) + m.x442 == 0)
+m.c227 = Constraint(expr=-(m.x160 - m.x161)/log(m.x160/(1e-10 + m.x161)) + m.x442 == 0)
 
-m.c228 = Constraint(expr=-(m.x161 - m.x162)/log(m.x161/(1e-6 + m.x162)) + m.x443 == 0)
+m.c228 = Constraint(expr=-(m.x161 - m.x162)/log(m.x161/(1e-10 + m.x162)) + m.x443 == 0)
 
-m.c229 = Constraint(expr=-(m.x163 - m.x164)/log(m.x163/(1e-6 + m.x164)) + m.x444 == 0)
+m.c229 = Constraint(expr=-(m.x163 - m.x164)/log(m.x163/(1e-10 + m.x164)) + m.x444 == 0)
 
-m.c230 = Constraint(expr=-(m.x164 - m.x165)/log(m.x164/(1e-6 + m.x165)) + m.x445 == 0)
+m.c230 = Constraint(expr=-(m.x164 - m.x165)/log(m.x164/(1e-10 + m.x165)) + m.x445 == 0)
 
-m.c231 = Constraint(expr=-(m.x166 - m.x167)/log(m.x166/(1e-6 + m.x167)) + m.x446 == 0)
+m.c231 = Constraint(expr=-(m.x166 - m.x167)/log(m.x166/(1e-10 + m.x167)) + m.x446 == 0)
 
-m.c232 = Constraint(expr=-(m.x167 - m.x168)/log(m.x167/(1e-6 + m.x168)) + m.x447 == 0)
+m.c232 = Constraint(expr=-(m.x167 - m.x168)/log(m.x167/(1e-10 + m.x168)) + m.x447 == 0)
 
-m.c233 = Constraint(expr=-(m.x169 - m.x170)/log(m.x169/(1e-6 + m.x170)) + m.x448 == 0)
+m.c233 = Constraint(expr=-(m.x169 - m.x170)/log(m.x169/(1e-10 + m.x170)) + m.x448 == 0)
 
-m.c234 = Constraint(expr=-(m.x170 - m.x171)/log(m.x170/(1e-6 + m.x171)) + m.x449 == 0)
+m.c234 = Constraint(expr=-(m.x170 - m.x171)/log(m.x170/(1e-10 + m.x171)) + m.x449 == 0)
 
-m.c235 = Constraint(expr=-(m.x172 - m.x173)/log(m.x172/(1e-6 + m.x173)) + m.x450 == 0)
+m.c235 = Constraint(expr=-(m.x172 - m.x173)/log(m.x172/(1e-10 + m.x173)) + m.x450 == 0)
 
-m.c236 = Constraint(expr=-(m.x173 - m.x174)/log(m.x173/(1e-6 + m.x174)) + m.x451 == 0)
+m.c236 = Constraint(expr=-(m.x173 - m.x174)/log(m.x173/(1e-10 + m.x174)) + m.x451 == 0)
 
-m.c237 = Constraint(expr=-(m.x175 - m.x176)/log(m.x175/(1e-6 + m.x176)) + m.x452 == 0)
+m.c237 = Constraint(expr=-(m.x175 - m.x176)/log(m.x175/(1e-10 + m.x176)) + m.x452 == 0)
 
-m.c238 = Constraint(expr=-(m.x176 - m.x177)/log(m.x176/(1e-6 + m.x177)) + m.x453 == 0)
+m.c238 = Constraint(expr=-(m.x176 - m.x177)/log(m.x176/(1e-10 + m.x177)) + m.x453 == 0)
 
-m.c239 = Constraint(expr=-(m.x178 - m.x179)/log(m.x178/(1e-6 + m.x179)) + m.x454 == 0)
+m.c239 = Constraint(expr=-(m.x178 - m.x179)/log(m.x178/(1e-10 + m.x179)) + m.x454 == 0)
 
-m.c240 = Constraint(expr=-(m.x179 - m.x180)/log(m.x179/(1e-6 + m.x180)) + m.x455 == 0)
+m.c240 = Constraint(expr=-(m.x179 - m.x180)/log(m.x179/(1e-10 + m.x180)) + m.x455 == 0)
 
-m.c241 = Constraint(expr=-(m.x181 - m.x182)/log(m.x181/(1e-6 + m.x182)) + m.x456 == 0)
+m.c241 = Constraint(expr=-(m.x181 - m.x182)/log(m.x181/(1e-10 + m.x182)) + m.x456 == 0)
 
-m.c242 = Constraint(expr=-(m.x182 - m.x183)/log(m.x182/(1e-6 + m.x183)) + m.x457 == 0)
+m.c242 = Constraint(expr=-(m.x182 - m.x183)/log(m.x182/(1e-10 + m.x183)) + m.x457 == 0)
 
-m.c243 = Constraint(expr=-(m.x184 - m.x185)/log(m.x184/(1e-6 + m.x185)) + m.x458 == 0)
+m.c243 = Constraint(expr=-(m.x184 - m.x185)/log(m.x184/(1e-10 + m.x185)) + m.x458 == 0)
 
-m.c244 = Constraint(expr=-(m.x185 - m.x186)/log(m.x185/(1e-6 + m.x186)) + m.x459 == 0)
+m.c244 = Constraint(expr=-(m.x185 - m.x186)/log(m.x185/(1e-10 + m.x186)) + m.x459 == 0)
 
-m.c245 = Constraint(expr=-(m.x187 - m.x188)/log(m.x187/(1e-6 + m.x188)) + m.x460 == 0)
+m.c245 = Constraint(expr=-(m.x187 - m.x188)/log(m.x187/(1e-10 + m.x188)) + m.x460 == 0)
 
-m.c246 = Constraint(expr=-(m.x188 - m.x189)/log(m.x188/(1e-6 + m.x189)) + m.x461 == 0)
+m.c246 = Constraint(expr=-(m.x188 - m.x189)/log(m.x188/(1e-10 + m.x189)) + m.x461 == 0)
 
-m.c247 = Constraint(expr=-(m.x190 - m.x191)/log(m.x190/(1e-6 + m.x191)) + m.x462 == 0)
+m.c247 = Constraint(expr=-(m.x190 - m.x191)/log(m.x190/(1e-10 + m.x191)) + m.x462 == 0)
 
-m.c248 = Constraint(expr=-(m.x191 - m.x192)/log(m.x191/(1e-6 + m.x192)) + m.x463 == 0)
+m.c248 = Constraint(expr=-(m.x191 - m.x192)/log(m.x191/(1e-10 + m.x192)) + m.x463 == 0)
 
-m.c249 = Constraint(expr=-(m.x193 - m.x194)/log(m.x193/(1e-6 + m.x194)) + m.x464 == 0)
+m.c249 = Constraint(expr=-(m.x193 - m.x194)/log(m.x193/(1e-10 + m.x194)) + m.x464 == 0)
 
-m.c250 = Constraint(expr=-(m.x194 - m.x195)/log(m.x194/(1e-6 + m.x195)) + m.x465 == 0)
+m.c250 = Constraint(expr=-(m.x194 - m.x195)/log(m.x194/(1e-10 + m.x195)) + m.x465 == 0)
 
-m.c251 = Constraint(expr=-(m.x196 - m.x197)/log(m.x196/(1e-6 + m.x197)) + m.x466 == 0)
+m.c251 = Constraint(expr=-(m.x196 - m.x197)/log(m.x196/(1e-10 + m.x197)) + m.x466 == 0)
 
-m.c252 = Constraint(expr=-(m.x197 - m.x198)/log(m.x197/(1e-6 + m.x198)) + m.x467 == 0)
+m.c252 = Constraint(expr=-(m.x197 - m.x198)/log(m.x197/(1e-10 + m.x198)) + m.x467 == 0)
 
-m.c253 = Constraint(expr=-(m.x199 - m.x200)/log(m.x199/(1e-6 + m.x200)) + m.x468 == 0)
+m.c253 = Constraint(expr=-(m.x199 - m.x200)/log(m.x199/(1e-10 + m.x200)) + m.x468 == 0)
 
-m.c254 = Constraint(expr=-(m.x200 - m.x201)/log(m.x200/(1e-6 + m.x201)) + m.x469 == 0)
+m.c254 = Constraint(expr=-(m.x200 - m.x201)/log(m.x200/(1e-10 + m.x201)) + m.x469 == 0)
 
-m.c255 = Constraint(expr=-(m.x202 - m.x203)/log(m.x202/(1e-6 + m.x203)) + m.x470 == 0)
+m.c255 = Constraint(expr=-(m.x202 - m.x203)/log(m.x202/(1e-10 + m.x203)) + m.x470 == 0)
 
-m.c256 = Constraint(expr=-(m.x203 - m.x204)/log(m.x203/(1e-6 + m.x204)) + m.x471 == 0)
+m.c256 = Constraint(expr=-(m.x203 - m.x204)/log(m.x203/(1e-10 + m.x204)) + m.x471 == 0)
 
-m.c257 = Constraint(expr=-(m.x205 - m.x206)/log(m.x205/(1e-6 + m.x206)) + m.x472 == 0)
+m.c257 = Constraint(expr=-(m.x205 - m.x206)/log(m.x205/(1e-10 + m.x206)) + m.x472 == 0)
 
-m.c258 = Constraint(expr=-(m.x206 - m.x207)/log(m.x206/(1e-6 + m.x207)) + m.x473 == 0)
+m.c258 = Constraint(expr=-(m.x206 - m.x207)/log(m.x206/(1e-10 + m.x207)) + m.x473 == 0)
 
-m.c259 = Constraint(expr=-(m.x208 - m.x209)/log(m.x208/(1e-6 + m.x209)) + m.x474 == 0)
+m.c259 = Constraint(expr=-(m.x208 - m.x209)/log(m.x208/(1e-10 + m.x209)) + m.x474 == 0)
 
-m.c260 = Constraint(expr=-(m.x209 - m.x210)/log(m.x209/(1e-6 + m.x210)) + m.x475 == 0)
+m.c260 = Constraint(expr=-(m.x209 - m.x210)/log(m.x209/(1e-10 + m.x210)) + m.x475 == 0)
 
-m.c261 = Constraint(expr=-(m.x211 - m.x212)/log(m.x211/(1e-6 + m.x212)) + m.x476 == 0)
+m.c261 = Constraint(expr=-(m.x211 - m.x212)/log(m.x211/(1e-10 + m.x212)) + m.x476 == 0)
 
-m.c262 = Constraint(expr=-(m.x212 - m.x213)/log(m.x212/(1e-6 + m.x213)) + m.x477 == 0)
+m.c262 = Constraint(expr=-(m.x212 - m.x213)/log(m.x212/(1e-10 + m.x213)) + m.x477 == 0)
 
-m.c263 = Constraint(expr=-(m.x214 - m.x215)/log(m.x214/(1e-6 + m.x215)) + m.x478 == 0)
+m.c263 = Constraint(expr=-(m.x214 - m.x215)/log(m.x214/(1e-10 + m.x215)) + m.x478 == 0)
 
-m.c264 = Constraint(expr=-(m.x215 - m.x216)/log(m.x215/(1e-6 + m.x216)) + m.x479 == 0)
+m.c264 = Constraint(expr=-(m.x215 - m.x216)/log(m.x215/(1e-10 + m.x216)) + m.x479 == 0)
 
-m.c265 = Constraint(expr=-(m.x217 - m.x218)/log(m.x217/(1e-6 + m.x218)) + m.x480 == 0)
+m.c265 = Constraint(expr=-(m.x217 - m.x218)/log(m.x217/(1e-10 + m.x218)) + m.x480 == 0)
 
-m.c266 = Constraint(expr=-(m.x218 - m.x219)/log(m.x218/(1e-6 + m.x219)) + m.x481 == 0)
+m.c266 = Constraint(expr=-(m.x218 - m.x219)/log(m.x218/(1e-10 + m.x219)) + m.x481 == 0)
 
-m.c267 = Constraint(expr=-(m.x220 - m.x221)/log(m.x220/(1e-6 + m.x221)) + m.x482 == 0)
+m.c267 = Constraint(expr=-(m.x220 - m.x221)/log(m.x220/(1e-10 + m.x221)) + m.x482 == 0)
 
-m.c268 = Constraint(expr=-(m.x221 - m.x222)/log(m.x221/(1e-6 + m.x222)) + m.x483 == 0)
+m.c268 = Constraint(expr=-(m.x221 - m.x222)/log(m.x221/(1e-10 + m.x222)) + m.x483 == 0)
 
-m.c269 = Constraint(expr=-(m.x223 - m.x224)/log(m.x223/(1e-6 + m.x224)) + m.x484 == 0)
+m.c269 = Constraint(expr=-(m.x223 - m.x224)/log(m.x223/(1e-10 + m.x224)) + m.x484 == 0)
 
-m.c270 = Constraint(expr=-(m.x224 - m.x225)/log(m.x224/(1e-6 + m.x225)) + m.x485 == 0)
+m.c270 = Constraint(expr=-(m.x224 - m.x225)/log(m.x224/(1e-10 + m.x225)) + m.x485 == 0)
 
 m.c271 = Constraint(expr=-1.17647058823529*m.x91/(0.01 + m.x436) + m.x496 == 0)
 

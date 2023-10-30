@@ -1390,7 +1390,7 @@ m.c392 = Constraint(expr=   m.x337 - m.x344 - m.x345 == 0)
 
 m.c393 = Constraint(expr=   m.x338 - m.x346 - m.x347 - m.x348 == 0)
 
-m.c394 = Constraint(expr=(m.x362/(1e-6 + m.b530) - log(1 + m.x358/(1e-6 + m.b530)))*(1e-6 + m.b530) <= 0)
+m.c394 = Constraint(expr=(m.x362/(1e-10 + m.b530) - log(1 + m.x358/(1e-10 + m.b530)))*(1e-10 + m.b530) <= 0)
 
 m.c395 = Constraint(expr=   m.x359 == 0)
 
@@ -1408,7 +1408,7 @@ m.c401 = Constraint(expr=   m.x362 - 3.71357206670431*m.b530 <= 0)
 
 m.c402 = Constraint(expr=   m.x363 + 3.71357206670431*m.b530 <= 3.71357206670431)
 
-m.c403 = Constraint(expr=(m.x364/(1e-6 + m.b531) - 1.2*log(1 + m.x360/(1e-6 + m.b531)))*(1e-6 + m.b531) <= 0)
+m.c403 = Constraint(expr=(m.x364/(1e-10 + m.b531) - 1.2*log(1 + m.x360/(1e-10 + m.b531)))*(1e-10 + m.b531) <= 0)
 
 m.c404 = Constraint(expr=   m.x361 == 0)
 
@@ -1444,7 +1444,7 @@ m.c419 = Constraint(expr=   m.x374 - 3.34221486003388*m.b532 <= 0)
 
 m.c420 = Constraint(expr=   m.x375 + 3.34221486003388*m.b532 <= 3.34221486003388)
 
-m.c421 = Constraint(expr=(m.x376/(1e-6 + m.b533) - 1.5*log(1 + m.x368/(1e-6 + m.b533)))*(1e-6 + m.b533) <= 0)
+m.c421 = Constraint(expr=(m.x376/(1e-10 + m.b533) - 1.5*log(1 + m.x368/(1e-10 + m.b533)))*(1e-10 + m.b533) <= 0)
 
 m.c422 = Constraint(expr=   m.x369 == 0)
 
@@ -1490,7 +1490,7 @@ m.c442 = Constraint(expr=   m.x380 - 15*m.b534 <= 0)
 
 m.c443 = Constraint(expr=   m.x381 + 15*m.b534 <= 15)
 
-m.c444 = Constraint(expr=(m.x392/(1e-6 + m.b535) - 1.25*log(1 + m.x382/(1e-6 + m.b535)))*(1e-6 + m.b535) <= 0)
+m.c444 = Constraint(expr=(m.x392/(1e-10 + m.b535) - 1.25*log(1 + m.x382/(1e-10 + m.b535)))*(1e-10 + m.b535) <= 0)
 
 m.c445 = Constraint(expr=   m.x383 == 0)
 
@@ -1508,7 +1508,7 @@ m.c451 = Constraint(expr=   m.x392 - 1.83548069293539*m.b535 <= 0)
 
 m.c452 = Constraint(expr=   m.x394 + 1.83548069293539*m.b535 <= 1.83548069293539)
 
-m.c453 = Constraint(expr=(m.x396/(1e-6 + m.b536) - 0.9*log(1 + m.x384/(1e-6 + m.b536)))*(1e-6 + m.b536) <= 0)
+m.c453 = Constraint(expr=(m.x396/(1e-10 + m.b536) - 0.9*log(1 + m.x384/(1e-10 + m.b536)))*(1e-10 + m.b536) <= 0)
 
 m.c454 = Constraint(expr=   m.x385 == 0)
 
@@ -1526,7 +1526,7 @@ m.c460 = Constraint(expr=   m.x396 - 1.32154609891348*m.b536 <= 0)
 
 m.c461 = Constraint(expr=   m.x398 + 1.32154609891348*m.b536 <= 1.32154609891348)
 
-m.c462 = Constraint(expr=(m.x400/(1e-6 + m.b537) - log(1 + m.x377/(1e-6 + m.b537)))*(1e-6 + m.b537) <= 0)
+m.c462 = Constraint(expr=(m.x400/(1e-10 + m.b537) - log(1 + m.x377/(1e-10 + m.b537)))*(1e-10 + m.b537) <= 0)
 
 m.c463 = Constraint(expr=   m.x379 == 0)
 
@@ -1580,7 +1580,7 @@ m.c487 = Constraint(expr=   m.x404 - 9*m.b539 <= 0)
 
 m.c488 = Constraint(expr=   m.x405 + 9*m.b539 <= 9)
 
-m.c489 = Constraint(expr=(m.x406/(1e-6 + m.b540) - 1.1*log(1 + m.x390/(1e-6 + m.b540)))*(1e-6 + m.b540) <= 0)
+m.c489 = Constraint(expr=(m.x406/(1e-10 + m.b540) - 1.1*log(1 + m.x390/(1e-10 + m.b540)))*(1e-10 + m.b540) <= 0)
 
 m.c490 = Constraint(expr=   m.x391 == 0)
 
@@ -1626,7 +1626,7 @@ m.c510 = Constraint(expr=   m.x426 - 20*m.b541 <= 0)
 
 m.c511 = Constraint(expr=   m.x427 + 20*m.b541 <= 20)
 
-m.c512 = Constraint(expr=(m.x428/(1e-6 + m.b542) - log(1 + m.x397/(1e-6 + m.b542)))*(1e-6 + m.b542) <= 0)
+m.c512 = Constraint(expr=(m.x428/(1e-10 + m.b542) - log(1 + m.x397/(1e-10 + m.b542)))*(1e-10 + m.b542) <= 0)
 
 m.c513 = Constraint(expr=   m.x399 == 0)
 
@@ -1644,7 +1644,7 @@ m.c519 = Constraint(expr=   m.x428 - 0.842233385663186*m.b542 <= 0)
 
 m.c520 = Constraint(expr=   m.x429 + 0.842233385663186*m.b542 <= 0.842233385663186)
 
-m.c521 = Constraint(expr=(m.x430/(1e-6 + m.b543) - 0.7*log(1 + m.x408/(1e-6 + m.b543)))*(1e-6 + m.b543) <= 0)
+m.c521 = Constraint(expr=(m.x430/(1e-10 + m.b543) - 0.7*log(1 + m.x408/(1e-10 + m.b543)))*(1e-10 + m.b543) <= 0)
 
 m.c522 = Constraint(expr=   m.x409 == 0)
 
@@ -1662,9 +1662,9 @@ m.c528 = Constraint(expr=   m.x430 - 0.572481933717686*m.b543 <= 0)
 
 m.c529 = Constraint(expr=   m.x431 + 0.572481933717686*m.b543 <= 0.572481933717686)
 
-m.c530 = Constraint(expr=(m.x432/(1e-6 + m.b544) - 0.65*log(1 + m.x410/(1e-6 + m.b544)))*(1e-6 + m.b544) <= 0)
+m.c530 = Constraint(expr=(m.x432/(1e-10 + m.b544) - 0.65*log(1 + m.x410/(1e-10 + m.b544)))*(1e-10 + m.b544) <= 0)
 
-m.c531 = Constraint(expr=(m.x432/(1e-6 + m.b544) - 0.65*log(1 + m.x414/(1e-6 + m.b544)))*(1e-6 + m.b544) <= 0)
+m.c531 = Constraint(expr=(m.x432/(1e-10 + m.b544) - 0.65*log(1 + m.x414/(1e-10 + m.b544)))*(1e-10 + m.b544) <= 0)
 
 m.c532 = Constraint(expr=   m.x411 == 0)
 
@@ -1726,7 +1726,7 @@ m.c560 = Constraint(expr=   m.x436 - 9*m.b546 <= 0)
 
 m.c561 = Constraint(expr=   m.x437 + 9*m.b546 <= 9)
 
-m.c562 = Constraint(expr=(m.x438/(1e-6 + m.b547) - 0.75*log(1 + m.x420/(1e-6 + m.b547)))*(1e-6 + m.b547) <= 0)
+m.c562 = Constraint(expr=(m.x438/(1e-10 + m.b547) - 0.75*log(1 + m.x420/(1e-10 + m.b547)))*(1e-10 + m.b547) <= 0)
 
 m.c563 = Constraint(expr=   m.x421 == 0)
 
@@ -1744,7 +1744,7 @@ m.c569 = Constraint(expr=   m.x438 - 1.04900943706034*m.b547 <= 0)
 
 m.c570 = Constraint(expr=   m.x439 + 1.04900943706034*m.b547 <= 1.04900943706034)
 
-m.c571 = Constraint(expr=(m.x440/(1e-6 + m.b548) - 0.8*log(1 + m.x422/(1e-6 + m.b548)))*(1e-6 + m.b548) <= 0)
+m.c571 = Constraint(expr=(m.x440/(1e-10 + m.b548) - 0.8*log(1 + m.x422/(1e-10 + m.b548)))*(1e-10 + m.b548) <= 0)
 
 m.c572 = Constraint(expr=   m.x423 == 0)
 
@@ -1762,7 +1762,7 @@ m.c578 = Constraint(expr=   m.x440 - 1.11894339953103*m.b548 <= 0)
 
 m.c579 = Constraint(expr=   m.x441 + 1.11894339953103*m.b548 <= 1.11894339953103)
 
-m.c580 = Constraint(expr=(m.x442/(1e-6 + m.b549) - 0.85*log(1 + m.x424/(1e-6 + m.b549)))*(1e-6 + m.b549) <= 0)
+m.c580 = Constraint(expr=(m.x442/(1e-10 + m.b549) - 0.85*log(1 + m.x424/(1e-10 + m.b549)))*(1e-10 + m.b549) <= 0)
 
 m.c581 = Constraint(expr=   m.x425 == 0)
 
@@ -1780,7 +1780,7 @@ m.c587 = Constraint(expr=   m.x442 - 1.18887736200171*m.b549 <= 0)
 
 m.c588 = Constraint(expr=   m.x443 + 1.18887736200171*m.b549 <= 1.18887736200171)
 
-m.c589 = Constraint(expr=(m.x448/(1e-6 + m.b550) - log(1 + m.x444/(1e-6 + m.b550)))*(1e-6 + m.b550) <= 0)
+m.c589 = Constraint(expr=(m.x448/(1e-10 + m.b550) - log(1 + m.x444/(1e-10 + m.b550)))*(1e-10 + m.b550) <= 0)
 
 m.c590 = Constraint(expr=   m.x445 == 0)
 
@@ -1798,7 +1798,7 @@ m.c596 = Constraint(expr=   m.x448 - 0.78338879230327*m.b550 <= 0)
 
 m.c597 = Constraint(expr=   m.x449 + 0.78338879230327*m.b550 <= 0.78338879230327)
 
-m.c598 = Constraint(expr=(m.x450/(1e-6 + m.b551) - 1.2*log(1 + m.x446/(1e-6 + m.b551)))*(1e-6 + m.b551) <= 0)
+m.c598 = Constraint(expr=(m.x450/(1e-10 + m.b551) - 1.2*log(1 + m.x446/(1e-10 + m.b551)))*(1e-10 + m.b551) <= 0)
 
 m.c599 = Constraint(expr=   m.x447 == 0)
 
@@ -1834,7 +1834,7 @@ m.c614 = Constraint(expr=   m.x460 - 0.705049913072943*m.b552 <= 0)
 
 m.c615 = Constraint(expr=   m.x461 + 0.705049913072943*m.b552 <= 0.705049913072943)
 
-m.c616 = Constraint(expr=(m.x462/(1e-6 + m.b553) - 1.5*log(1 + m.x454/(1e-6 + m.b553)))*(1e-6 + m.b553) <= 0)
+m.c616 = Constraint(expr=(m.x462/(1e-10 + m.b553) - 1.5*log(1 + m.x454/(1e-10 + m.b553)))*(1e-10 + m.b553) <= 0)
 
 m.c617 = Constraint(expr=   m.x455 == 0)
 
@@ -1880,7 +1880,7 @@ m.c637 = Constraint(expr=   m.x466 - 15*m.b554 <= 0)
 
 m.c638 = Constraint(expr=   m.x467 + 15*m.b554 <= 15)
 
-m.c639 = Constraint(expr=(m.x478/(1e-6 + m.b555) - 1.25*log(1 + m.x468/(1e-6 + m.b555)))*(1e-6 + m.b555) <= 0)
+m.c639 = Constraint(expr=(m.x478/(1e-10 + m.b555) - 1.25*log(1 + m.x468/(1e-10 + m.b555)))*(1e-10 + m.b555) <= 0)
 
 m.c640 = Constraint(expr=   m.x469 == 0)
 
@@ -1898,7 +1898,7 @@ m.c646 = Constraint(expr=   m.x478 - 0.666992981045719*m.b555 <= 0)
 
 m.c647 = Constraint(expr=   m.x480 + 0.666992981045719*m.b555 <= 0.666992981045719)
 
-m.c648 = Constraint(expr=(m.x482/(1e-6 + m.b556) - 0.9*log(1 + m.x470/(1e-6 + m.b556)))*(1e-6 + m.b556) <= 0)
+m.c648 = Constraint(expr=(m.x482/(1e-10 + m.b556) - 0.9*log(1 + m.x470/(1e-10 + m.b556)))*(1e-10 + m.b556) <= 0)
 
 m.c649 = Constraint(expr=   m.x471 == 0)
 
@@ -1916,7 +1916,7 @@ m.c655 = Constraint(expr=   m.x482 - 0.480234946352917*m.b556 <= 0)
 
 m.c656 = Constraint(expr=   m.x484 + 0.480234946352917*m.b556 <= 0.480234946352917)
 
-m.c657 = Constraint(expr=(m.x486/(1e-6 + m.b557) - log(1 + m.x463/(1e-6 + m.b557)))*(1e-6 + m.b557) <= 0)
+m.c657 = Constraint(expr=(m.x486/(1e-10 + m.b557) - log(1 + m.x463/(1e-10 + m.b557)))*(1e-10 + m.b557) <= 0)
 
 m.c658 = Constraint(expr=   m.x465 == 0)
 
@@ -1970,7 +1970,7 @@ m.c682 = Constraint(expr=   m.x490 - 9*m.b559 <= 0)
 
 m.c683 = Constraint(expr=   m.x491 + 9*m.b559 <= 9)
 
-m.c684 = Constraint(expr=(m.x492/(1e-6 + m.b560) - 1.1*log(1 + m.x476/(1e-6 + m.b560)))*(1e-6 + m.b560) <= 0)
+m.c684 = Constraint(expr=(m.x492/(1e-10 + m.b560) - 1.1*log(1 + m.x476/(1e-10 + m.b560)))*(1e-10 + m.b560) <= 0)
 
 m.c685 = Constraint(expr=   m.x477 == 0)
 
@@ -2016,7 +2016,7 @@ m.c705 = Constraint(expr=   m.x512 - 25*m.b561 <= 0)
 
 m.c706 = Constraint(expr=   m.x513 + 25*m.b561 <= 25)
 
-m.c707 = Constraint(expr=(m.x514/(1e-6 + m.b562) - log(1 + m.x483/(1e-6 + m.b562)))*(1e-6 + m.b562) <= 0)
+m.c707 = Constraint(expr=(m.x514/(1e-10 + m.b562) - log(1 + m.x483/(1e-10 + m.b562)))*(1e-10 + m.b562) <= 0)
 
 m.c708 = Constraint(expr=   m.x485 == 0)
 
@@ -2034,7 +2034,7 @@ m.c714 = Constraint(expr=   m.x514 - 0.392200822712722*m.b562 <= 0)
 
 m.c715 = Constraint(expr=   m.x515 + 0.392200822712722*m.b562 <= 0.392200822712722)
 
-m.c716 = Constraint(expr=(m.x516/(1e-6 + m.b563) - 0.7*log(1 + m.x494/(1e-6 + m.b563)))*(1e-6 + m.b563) <= 0)
+m.c716 = Constraint(expr=(m.x516/(1e-10 + m.b563) - 0.7*log(1 + m.x494/(1e-10 + m.b563)))*(1e-10 + m.b563) <= 0)
 
 m.c717 = Constraint(expr=   m.x495 == 0)
 
@@ -2052,9 +2052,9 @@ m.c723 = Constraint(expr=   m.x516 - 0.367386387824208*m.b563 <= 0)
 
 m.c724 = Constraint(expr=   m.x517 + 0.367386387824208*m.b563 <= 0.367386387824208)
 
-m.c725 = Constraint(expr=(m.x518/(1e-6 + m.b564) - 0.65*log(1 + m.x496/(1e-6 + m.b564)))*(1e-6 + m.b564) <= 0)
+m.c725 = Constraint(expr=(m.x518/(1e-10 + m.b564) - 0.65*log(1 + m.x496/(1e-10 + m.b564)))*(1e-10 + m.b564) <= 0)
 
-m.c726 = Constraint(expr=(m.x518/(1e-6 + m.b564) - 0.65*log(1 + m.x500/(1e-6 + m.b564)))*(1e-6 + m.b564) <= 0)
+m.c726 = Constraint(expr=(m.x518/(1e-10 + m.b564) - 0.65*log(1 + m.x500/(1e-10 + m.b564)))*(1e-10 + m.b564) <= 0)
 
 m.c727 = Constraint(expr=   m.x497 == 0)
 
@@ -2116,7 +2116,7 @@ m.c755 = Constraint(expr=   m.x522 - 9*m.b566 <= 0)
 
 m.c756 = Constraint(expr=   m.x523 + 9*m.b566 <= 9)
 
-m.c757 = Constraint(expr=(m.x524/(1e-6 + m.b567) - 0.75*log(1 + m.x506/(1e-6 + m.b567)))*(1e-6 + m.b567) <= 0)
+m.c757 = Constraint(expr=(m.x524/(1e-10 + m.b567) - 0.75*log(1 + m.x506/(1e-10 + m.b567)))*(1e-10 + m.b567) <= 0)
 
 m.c758 = Constraint(expr=   m.x507 == 0)
 
@@ -2134,7 +2134,7 @@ m.c764 = Constraint(expr=   m.x524 - 1.04900943706034*m.b567 <= 0)
 
 m.c765 = Constraint(expr=   m.x525 + 1.04900943706034*m.b567 <= 1.04900943706034)
 
-m.c766 = Constraint(expr=(m.x526/(1e-6 + m.b568) - 0.8*log(1 + m.x508/(1e-6 + m.b568)))*(1e-6 + m.b568) <= 0)
+m.c766 = Constraint(expr=(m.x526/(1e-10 + m.b568) - 0.8*log(1 + m.x508/(1e-10 + m.b568)))*(1e-10 + m.b568) <= 0)
 
 m.c767 = Constraint(expr=   m.x509 == 0)
 
@@ -2152,7 +2152,7 @@ m.c773 = Constraint(expr=   m.x526 - 1.11894339953103*m.b568 <= 0)
 
 m.c774 = Constraint(expr=   m.x527 + 1.11894339953103*m.b568 <= 1.11894339953103)
 
-m.c775 = Constraint(expr=(m.x528/(1e-6 + m.b569) - 0.85*log(1 + m.x510/(1e-6 + m.b569)))*(1e-6 + m.b569) <= 0)
+m.c775 = Constraint(expr=(m.x528/(1e-10 + m.b569) - 0.85*log(1 + m.x510/(1e-10 + m.b569)))*(1e-10 + m.b569) <= 0)
 
 m.c776 = Constraint(expr=   m.x511 == 0)
 
